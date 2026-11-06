@@ -19,19 +19,22 @@ python cua_eval_v11.py --base <model> --adapter <adapter> \
   --ground-set evals/phase1_eval_600.json --tol 50 --batch-size 1 --out out/v1.json
 ```
 
-## Results - verification status (2026-11-06)
+## Results - verification status (2026-11-06, corrected)
 
-**Earlier figures are withdrawn pending re-verification.** The numbers previously listed here (adapter 49.0% / 294 of 600; ScreenSpot 76.3%; UI-Vision 26.3%; tool 60/63; refusal 8/8; multi-step 11/11) could not be reproduced on 2026-11-06, and the artifacts that produced them are not included in this repository. Do not cite them.
+**Earlier figures are withdrawn.** The previously listed numbers (adapter 49.0% / 294 of 600; ScreenSpot 76.3%; UI-Vision 26.3%; tool 60/63; refusal 8/8; multi-step 11/11) could not be reproduced on 2026-11-06 and their artifacts are not in this repository. Do not cite them.
 
-**Measured 2026-11-06** (Qwen2.5-VL-3B base plus a LoRA adapter, normalized 0-1000 coordinates, tolerance 50 px, batch size 1):
+**Measurement bug found and corrected.** The first 2026-11-06 run scored 23/600 (3.8%) using `--coord-mode norm`, but the checkpoint emits absolute pixels: 47.7% of raw coordinates exceed 1000 and 286/599 fall outside a 0-1000 range. Re-scoring the same generations in pixel space gives 9.0% (checkpoint 4750) and 9.5% (checkpoint 7750); accepting either convention gives 11.7% and 12.2%. The 3.8% figure is an artifact of the coordinate-mode mismatch, not a fair model measurement.
 
-| manifest | hits | rate |
-|---|---:|---:|
-| phase1_eval_600 (grounding) | 23/600 | 3.8% |
-| uivision_300 | 8/300 | 2.7% |
-| screenspot_300 | 15/300 | 5.0% |
+| checkpoint | abs | norm (as first reported) | union |
+|---|---:|---:|---:|
+| norm-ck4750 | 54/599 = 9.0% | 23/599 = 3.8% | 70/599 = 11.7% |
+| norm-ck7750 | 57/599 = 9.5% | 22/599 = 3.7% | 73/599 = 12.2% |
 
-An earlier absolute-pixel adapter scored 9-15/600 grounding, 2-5/300 UI-Vision and 5-10/300 ScreenSpot. Normalized coordinates did better than absolute pixels on this setup; all rates are low. Aggregates: `results/cua-trend-2026-11-06.json`. No prompts or images are redistributed. Adapter weights are not distributed (base model is under a non-commercial research licence).
+**Second mismatch (being measured).** Training used `max_pixels=602112` while `cua_eval_v12.py` defaults to `1003520`; 564/600 eval images therefore have a different visual token grid (mean 1.64x more tokens at eval). A diagnostic run with matched budgets is in progress; results will be appended.
+
+An earlier absolute-pixel checkpoint scored 9-15/600 ground, 2-8/300 UI-Vision, 5-10/300 ScreenSpot. Normalized-coordinate training did **not** learn the normalized convention: the model keeps emitting pixel coordinates.
+
+Aggregates: `results/cua-trend-2026-11-06.json`. No prompts or images are redistributed. Adapter weights are not distributed (base model is under a non-commercial research licence).
 
 **Invalid baseline:** UI-TARS-1.5-7B scored 0/600 in an earlier run because of a prompt/format mismatch; it is not evidence about that model and is excluded.
 
