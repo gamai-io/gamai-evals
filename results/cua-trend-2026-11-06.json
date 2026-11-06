@@ -1,0 +1,95 @@
+{
+ "title": "CUA grounding trend",
+ "date": "2026-11-06",
+ "tolerance_px": 50,
+ "batch_size": 1,
+ "coordinate_modes": {
+  "normalized": "0-1000 scaled to image size",
+  "absolute": "pixels"
+ },
+ "results": [
+  {
+   "adapter": "abs-ck250",
+   "mode": "absolute",
+   "ground": {
+    "hits": 15,
+    "n": 600
+   },
+   "ui_vision": {
+    "hits": 5,
+    "n": 300
+   },
+   "screenspot": {
+    "hits": 10,
+    "n": 300
+   }
+  },
+  {
+   "adapter": "abs-ck1000",
+   "mode": "absolute",
+   "ground": {
+    "hits": 9,
+    "n": 600
+   },
+   "ui_vision": {
+    "hits": 2,
+    "n": 300
+   },
+   "screenspot": null
+  },
+  {
+   "adapter": "abs-ck1500",
+   "mode": "absolute",
+   "ground": {
+    "hits": 9,
+    "n": 600
+   },
+   "ui_vision": {
+    "hits": 4,
+    "n": 300
+   },
+   "screenspot": {
+    "hits": 5,
+    "n": 300
+   }
+  },
+  {
+   "adapter": "abs-ck9500",
+   "mode": "absolute",
+   "ground": {
+    "hits": 15,
+    "n": 600
+   },
+   "ui_vision": null,
+   "screenspot": null
+  },
+  {
+   "adapter": "norm-ck4750",
+   "mode": "normalized",
+   "ground": {
+    "hits": 23,
+    "n": 600
+   },
+   "ui_vision": {
+    "hits": 8,
+    "n": 300
+   },
+   "screenspot": {
+    "hits": 15,
+    "n": 300
+   }
+  }
+ ],
+ "invalid_baseline": {
+  "model": "UI-TARS-1.5-7B",
+  "reason": "prompt/format mismatch in earlier run",
+  "reported": "0/600, 0/300, 0/300",
+  "status": "excluded"
+ },
+ "caveats": [
+  "Weights not distributed; base model licence is non-commercial research.",
+  "Trend incomplete: later checkpoints still running; null cells are not measured.",
+  "No prompts, images, or dataset redistribution.",
+  "Low absolute rates are reported as a negative result, not as a success."
+ ]
+}
