@@ -60,8 +60,14 @@
     "hits": 15,
     "n": 600
    },
-   "ui_vision": null,
-   "screenspot": null
+   "ui_vision": {
+    "hits": 8,
+    "n": 300
+   },
+   "screenspot": {
+    "hits": 7,
+    "n": 300
+   }
   },
   {
    "adapter": "norm-ck4750",
@@ -77,7 +83,37 @@
    "screenspot": {
     "hits": 15,
     "n": 300
+   },
+   "ground_abs": {
+    "hits": 54,
+    "n": 599
+   },
+   "ground_norm_reported": {
+    "hits": 23,
+    "n": 599
+   },
+   "ground_union": {
+    "hits": 70,
+    "n": 599
    }
+  },
+  {
+   "adapter": "norm-ck7750",
+   "mode": "normalized-training",
+   "ground": {
+    "hits": 22,
+    "n": 599
+   },
+   "ground_abs": {
+    "hits": 57,
+    "n": 599
+   },
+   "ground_union": {
+    "hits": 73,
+    "n": 599
+   },
+   "ui_vision": null,
+   "screenspot": null
   }
  ],
  "invalid_baseline": {
@@ -91,5 +127,17 @@
   "Trend incomplete: later checkpoints still running; null cells are not measured.",
   "No prompts, images, or dataset redistribution.",
   "Low absolute rates are reported as a negative result, not as a success."
- ]
+ ],
+ "measurement_correction": {
+  "reported_2026-11-06_first": "norm scoring only",
+  "issue": "checkpoint emits absolute pixels; norm scoring scaled by 1000",
+  "raw_out_of_range_share": 0.477,
+  "corrected": "report abs and union"
+ },
+ "preprocessing_mismatch": {
+  "training_max_pixels": 602112,
+  "eval_default_max_pixels": 1003520,
+  "images_with_different_token_grid": "564/600",
+  "status": "diagnostic run in progress"
+ }
 }
