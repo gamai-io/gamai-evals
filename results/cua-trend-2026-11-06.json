@@ -95,6 +95,23 @@
    "ground_union": {
     "hits": 70,
     "n": 599
+   },
+   "ground_matched_budget": {
+    "hits": 147,
+    "n": 600
+   },
+   "ui_vision_matched_budget": {
+    "hits": 60,
+    "n": 300
+   },
+   "screenspot_matched_budget": {
+    "hits": 87,
+    "n": 300
+   },
+   "ground_reported_default_budget": {
+    "hits": 23,
+    "n": 599,
+    "note": "coord-mode/budget artifact"
    }
   },
   {
@@ -139,5 +156,16 @@
   "eval_default_max_pixels": 1003520,
   "images_with_different_token_grid": "564/600",
   "status": "diagnostic run in progress"
+ },
+ "pixel_budget": {
+  "training": {
+   "max_pixels": 602112,
+   "min_pixels": 200704
+  },
+  "harness_default": {
+   "max_pixels": 1003520,
+   "min_pixels": 3136
+  },
+  "note": "pixel budget changes results by up to 6x; always report it"
  }
 }
