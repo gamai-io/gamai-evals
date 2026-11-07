@@ -19,27 +19,27 @@ python cua_eval_v11.py --base <model> --adapter <adapter> \
   --ground-set evals/phase1_eval_600.json --tol 50 --batch-size 1 --out out/v1.json
 ```
 
-## Results - verification status (2026-11-06, corrected)
+## Results - verification status (2026-11-06)
 
-**Earlier figures are withdrawn.** The previously listed numbers (adapter 49.0% / 294 of 600; ScreenSpot 76.3%; UI-Vision 26.3%; tool 60/63; refusal 8/8; multi-step 11/11) could not be reproduced on 2026-11-06 and their artifacts are not in this repository. Do not cite them.
+**Earlier figures are withdrawn.** The previously listed numbers (adapter 49.0% / 294 of 600; ScreenSpot 76.3%; UI-Vision 26.3%; tool 60/63; refusal 8/8; multi-step 11/11) could not be reproduced and their artifacts are not in this repository. Do not cite them.
 
-**Measurement bug found and corrected.** The first 2026-11-06 run scored 23/600 (3.8%) using `--coord-mode norm`, but the checkpoint emits absolute pixels: 47.7% of raw coordinates exceed 1000 and 286/599 fall outside a 0-1000 range. Re-scoring the same generations in pixel space gives 9.0% (checkpoint 4750) and 9.5% (checkpoint 7750); accepting either convention gives 11.7% and 12.2%. The 3.8% figure is an artifact of the coordinate-mode mismatch, not a fair model measurement.
+Pixel budget dominates the measurement. Three regimes, same checkpoints:
 
-| checkpoint | abs | norm (as first reported) | union |
-|---|---:|---:|---:|
-| norm-ck4750 | 54/599 = 9.0% | 23/599 = 3.8% | 70/599 = 11.7% |
-| norm-ck7750 | 57/599 = 9.5% | 22/599 = 3.7% | 73/599 = 12.2% |
+| regime | image budget | ck4750 ground | ck7750 ground |
+|---|---|---:|---:|
+| harness default | max 1,003,520 / min 3,136 | - | 22/599 = 3.7% (norm), 57/599 = 9.5% (abs) |
+| training budget | max 602,112 / min 200,704 | **147/600 = 24.5%** | **139/600 = 23.2%** |
+| union of both conventions (default budget) | - | 70/599 = 11.7% | 73/599 = 12.2% |
 
-**Second mismatch (being measured).** Training used `max_pixels=602112` while `cua_eval_v12.py` defaults to `1003520`; 564/600 eval images therefore have a different visual token grid (mean 1.64x more tokens at eval). A diagnostic run with matched budgets is in progress; results will be appended.
+At the training budget the normalized adapter also scores **20.0% on UI-Vision (60/300)** and **29.0% on ScreenSpot (87/300)**.
 
-An earlier absolute-pixel checkpoint scored 9-15/600 ground, 2-8/300 UI-Vision, 5-10/300 ScreenSpot. Normalized-coordinate training did **not** learn the normalized convention: the model keeps emitting pixel coordinates.
+**The 3.8% figure was a measurement artifact.** The checkpoint emits absolute pixels (47.7% of raw coordinates exceed 1000), while the first run scaled them as 0-1000. Scoring the same generations in pixel space gives 9.5%.
 
-Aggregates: `results/cua-trend-2026-11-06.json`. No prompts or images are redistributed. Adapter weights are not distributed (base model is under a non-commercial research licence).
+**Absolute-pixel lineage** (trained and scored in pixels, training budget): ck1500 68/600 = 11.3%, ck9500 77/600 = 12.8% (UI-Vision 12.3%). Normalized-coordinate training is about 2x better when the budget is matched.
 
-**Invalid baseline:** UI-TARS-1.5-7B scored 0/600 in an earlier run because of a prompt/format mismatch; it is not evidence about that model and is excluded.
+**Protocol-limited baselines:** base Qwen2.5-VL-3B and UI-TARS-1.5-7B both score 0 because they emit their native output format instead of our JSON. This is not evidence about their grounding ability.
 
-## LUMI-G benchmark
-Full protocol and numbers: `docs/LUMI_BENCHMARK_2026-11-06.md` (grounding and tool calling, with explicit limitations).
+Full report: `docs/LUMI_BENCHMARK_2026-11-06.md`. No prompts, images, or weights are redistributed. The adapter's base model is under a non-commercial research licence.
 
 ## What this does not prove
 - It is not a field lie-rate measurement.
