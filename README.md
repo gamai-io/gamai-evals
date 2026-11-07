@@ -38,6 +38,9 @@ Aggregates: `results/cua-trend-2026-11-06.json`. No prompts or images are redist
 
 **Invalid baseline:** UI-TARS-1.5-7B scored 0/600 in an earlier run because of a prompt/format mismatch; it is not evidence about that model and is excluded.
 
+## LUMI-G benchmark
+Full protocol and numbers: `docs/LUMI_BENCHMARK_2026-11-06.md` (grounding and tool calling, with explicit limitations).
+
 ## What this does not prove
 - It is not a field lie-rate measurement.
 - It does not make an agent honest; it measures specific grounding/tool behaviors under a fixed prompt and tolerance.
