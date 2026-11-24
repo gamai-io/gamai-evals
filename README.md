@@ -47,3 +47,15 @@ Full report: `docs/LUMI_BENCHMARK_2026-11-06.md`. No prompts, images, or weights
 
 ## License
 Apache-2.0. Dataset entries retain their upstream licenses (MIT / Apache-2.0).
+
+## For a buyer who says "prove the bot won't click the wrong button" (AI Lounge, 24 Nov 2026)
+
+That sentence is a test request, not a claim. What this repo gives an auditor:
+
+- a frozen task manifest per run (nothing changes between runs),
+- GUI-grounding tasks (click the right element) and refusal/multi-step tasks,
+- per-run JSON with the denominator, so a result is `x / n`, never a bare percentage.
+
+The figures in the tables above are therefore given as `hits / n` with the convention named.
+If a buyer wants their own number, the honest route is the one-week audit (28+ actions, each
+CONFIRMED / REFUTED / UNVERIFIABLE with a signed receipt) rather than a benchmark on our tasks.
