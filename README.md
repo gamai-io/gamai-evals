@@ -4,9 +4,14 @@ Evaluation harness for GUI grounding and tool-calling, with an honest contract: 
 
 ## What is here
 - `cua_eval_v11.py` — grounding + tool/refusal/multi-step evaluator (batch size 1 by default; resumable JSONL).
-- `evals/phase1_eval_600.json` — 600 UI-Vision element-grounding tasks (MIT).
+- `evals/phase1_eval_600.json` — 600 element-grounding tasks (MIT).
 - `evals/screenspot_300.json` — 300 ScreenSpot-v2 tasks (Apache-2.0).
 - `evals/uivision_300.json` — 300 UI-Vision tasks (MIT).
+
+**These are not three independent sets.** `phase1_eval_600` is exactly the **union** of
+`screenspot_300` and `uivision_300` (verified by `tests/test_manifest_overlap.py`). Scoring
+all three and reporting three numbers counts the same items twice; cite either the 600 as a
+whole or the two halves, not both as separate evidence.
 
 Each manifest entry has `image`, `instruction`, target `x/y/w/h`, `source`, `license`, `platform`.
 
