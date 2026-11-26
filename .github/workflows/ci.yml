@@ -10,4 +10,5 @@ jobs:
       - run: python -m pip install --upgrade pip
       - run: python -m py_compile cua_eval_v11.py
       - run: python -c "import json,glob; [json.load(open(f)) for f in glob.glob('evals/*.json')]; print('manifests ok')"
+      - run: python3 tools/trend_table.py --check
       - run: python -m pip install pytest && python -m pytest -q tests
